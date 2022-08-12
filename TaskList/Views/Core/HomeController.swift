@@ -95,7 +95,8 @@ class HomeController: UIViewController {
         }
         let vc = TaskDetailsController()
         
-        vc.task = tasks![index ?? 0]
+        vc.task = tasks![index!]
+        vc.index = index!
         
         navigationController?.pushViewController(vc, animated: true)
     }
