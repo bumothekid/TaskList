@@ -65,6 +65,7 @@ class TaskDetailsController: UIViewController {
     lazy var dueDatePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.date = (task["due"] as? Date)!
+        datePicker.isEnabled = false
         return datePicker
     }()
     
