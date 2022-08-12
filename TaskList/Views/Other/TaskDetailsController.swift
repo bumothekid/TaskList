@@ -134,6 +134,39 @@ class TaskDetailsController: UIViewController {
     }
     
     @objc
+    func deleteTask() {
+        let alert = UIAlertController(title: "", message: "Are you sure you want to delete this Task?", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { [self] _ in
+            var tasks = UserDefaults.standard.array(forKey: "tasks") as? [Dictionary<String, Any>]
+            
+            if tasks == nil {
+                tasks = [Dictionary<String, Any>]()
+            }
+            
+            var index: Int?
+            
+            for (idx, value) in tasks!.enumerated() {
+                if value["createdAt"] as? Date == task["createdAt"] as? Date {
+                    index = idx
+                }
+            }
+            
+            guard index != nil else {
+                return
+            }
+            
+            tasks!.remove(at: index!)
+            
+            UserDefaults.standard.set(tasks, forKey: "tasks")
+            
+            back()
+        }))
+        
+        present(alert, animated: true)
+    }
+    
+    @objc
     func back() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -147,8 +180,10 @@ class TaskDetailsController: UIViewController {
         navigationItem.hidesBackButton = true
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.left", withConfiguration: UIImage.SymbolConfiguration(font: .systemFont(ofSize: 16, weight: .bold))), style: .plain, target: self, action: #selector(back))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(font: .systemFont(ofSize: 16, weight: .bold))), style: .plain, target: self, action: #selector(deleteTask))
         
         navigationItem.leftBarButtonItem?.tintColor = .label
+        navigationItem.rightBarButtonItem?.tintColor = .systemRed
         
         view.addSubview(titleBackgroundView)
         titleBackgroundView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: -20, height: 50)
