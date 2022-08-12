@@ -85,6 +85,12 @@ class HomeController: UIViewController {
     // MARK: -- Functions
     
     func checkIfTaskIsOverdue(date: Date) -> Bool {
+        let dateInterval = date.timeIntervalSince1970
+        
+        if dateInterval > Date().timeIntervalSince1970 {
+            return true
+        }
+        
         return false
     }
     
