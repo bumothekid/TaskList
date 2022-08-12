@@ -101,7 +101,19 @@ class CompletedTaskDetailsController: UIViewController {
                 tasks = [Dictionary<String, Any>]()
             }
             
-            tasks!.remove(at: index)
+            var index: Int?
+            
+            for (idx, value) in tasks!.enumerated() {
+                if value["createdAt"] as? Date == task["createdAt"] as? Date {
+                    index = idx
+                }
+            }
+            
+            guard index != nil else {
+                return
+            }
+            
+            tasks!.remove(at: index!)
             
             UserDefaults.standard.set(tasks, forKey: "tasks")
             

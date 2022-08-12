@@ -115,17 +115,44 @@ class HomeController: UIViewController {
             tasks = [Dictionary<String, Any>]()
         }
         
-        if tasks![index!]["done"] as! Bool != true {
+        var filteredTasks = [Dictionary<String, Any>]()
+        
+        switch segmentControl.selectedSegmentIndex {
+            case 0:
+            for task in tasks! {
+                if task["done"] as! Bool == false && !checkIfTaskIsOverdue(date: task["due"] as! Date) {
+                    filteredTasks.append(task)
+                }
+            }
+            
+            case 1:
+            for task in tasks! {
+                if task["done"] as! Bool == true {
+                    filteredTasks.append(task)
+                }
+            }
+            
+            case 2:
+            for task in tasks! {
+                if task["done"] as! Bool == false && checkIfTaskIsOverdue(date: task["due"] as! Date) {
+                    filteredTasks.append(task)
+                }
+            }
+            default: break
+            
+        }
+        
+        if filteredTasks[index!]["done"] as! Bool != true {
             let vc = TaskDetailsController()
         
-            vc.task = tasks![index!]
+            vc.task = filteredTasks[index!]
             vc.index = index!
             
             navigationController?.pushViewController(vc, animated: true)
         } else {
             let vc = CompletedTaskDetailsController()
             
-            vc.task = tasks![index!]
+            vc.task = filteredTasks[index!]
             vc.index = index!
             
             navigationController?.pushViewController(vc, animated: true)

@@ -143,14 +143,14 @@ class CreateTaskController: UIViewController {
         
         if defaults.array(forKey: "tasks") == nil {
             var array = [Dictionary<String, Any>]()
-            let dict: Dictionary = ["title": titleTextField.text!, "description": descriptionTextView.text!, "due": dueDatePicker.date, "done": false] as [String : Any]
+            let dict: Dictionary = ["title": titleTextField.text!, "description": descriptionTextView.text!, "createdAt": Date(), "due": dueDatePicker.date, "done": false] as [String : Any]
             
             array.append(dict)
             
             defaults.set(array, forKey: "tasks")
         }
         else {
-            let dict: Dictionary = ["title": titleTextField.text!, "description": descriptionTextView.text!, "due": dueDatePicker.date, "done": false] as [String : Any]
+            let dict: Dictionary = ["title": titleTextField.text!, "description": descriptionTextView.text!, "createdAt": Date(), "due": dueDatePicker.date, "done": false] as [String : Any]
             
             var array = defaults.array(forKey: "tasks")!
             
