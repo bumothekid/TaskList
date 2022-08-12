@@ -77,6 +77,30 @@ class HomeController: UIViewController {
     }
     
     @objc
+    func showTaskDetails(_ sender: Any) {
+        guard let button = sender as? UIButton else {
+            return
+        }
+        
+        guard let stackView = button.superview?.superview as? UIStackView else {
+            return
+        }
+        
+        
+        let index = stackView.arrangedSubviews.firstIndex(of: button.superview!)
+        var tasks = UserDefaults.standard.array(forKey: "tasks") as? [Dictionary<String, Any>]
+        
+        if tasks == nil {
+            tasks = [Dictionary<String, Any>]()
+        }
+        let vc = TaskDetailsController()
+        
+        vc.task = tasks![index ?? 0]
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc
     func pushCreateTaskController() {
         let vc = CreateTaskController()
         navigationController?.pushViewController(vc, animated: true)
@@ -169,6 +193,12 @@ class HomeController: UIViewController {
                 return label
             }()
             
+            let taskButton: UIButton = {
+                let button = UIButton()
+                button.addTarget(self, action: #selector(showTaskDetails), for: .touchUpInside)
+                return button
+            }()
+            
             taskStackView.addArrangedSubview(taskView)
 
             taskView.anchor(left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 20, paddingRight: -20, height: 80)
@@ -178,6 +208,9 @@ class HomeController: UIViewController {
 
             taskView.addSubview(descriptionLabel)
             descriptionLabel.anchor(top: titleLabel.bottomAnchor, left: titleLabel.leftAnchor, right: titleLabel.rightAnchor, paddingTop: 10)
+            
+            taskView.addSubview(taskButton)
+            taskButton.anchor(top: taskView.topAnchor, left: taskView.leftAnchor, bottom: taskView.bottomAnchor, right: taskView.rightAnchor)
         }
         
         if taskStackView.subviews.isEmpty {
