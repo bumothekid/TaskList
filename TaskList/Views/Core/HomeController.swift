@@ -95,14 +95,11 @@ class HomeController: UIViewController {
     }
     
     func setupTaskViews(filter: taskFilter) async {
-        print("1")
         if !taskStackView.arrangedSubviews.isEmpty {
             for view in taskStackView.arrangedSubviews {
                 view.removeFromSuperview()
             }
         }
-        
-        print("1.75")
         
         var tasks = UserDefaults.standard.array(forKey: "tasks") as? [Dictionary<String, Any>]
         
@@ -110,37 +107,35 @@ class HomeController: UIViewController {
             tasks = [Dictionary<String, Any>]()
         }
         
-        print("2")
-        
         var filteredTasks = [Dictionary<String, Any>]()
         var color = UIColor.secondaryColor
         
         switch filter {
             case .pending:
-            print("3")
+            
             emptyLabel.text = "Your pending tasks are empty."
             for task in tasks! {
                 if task["done"] as! Bool == false && !checkIfTaskIsOverdue(date: task["due"] as! Date) {
-                    print("4")
                     filteredTasks.append(task)
                 }
             }
+            
             case .completed:
+            
             color = UIColor.green
             emptyLabel.text = "Your completed tasks are empty."
-            print("3")
             for task in tasks! {
                 if task["done"] as! Bool == true {
-                    print("4")
                     filteredTasks.append(task)
                 }
             }
+            
             case .overdue:
+            
             color = UIColor.red
             emptyLabel.text = "Your overdue tasks are empty."
             for task in tasks! {
                 if task["done"] as! Bool == false && checkIfTaskIsOverdue(date: task["due"] as! Date) {
-                    print("4")
                     filteredTasks.append(task)
                 }
             }
