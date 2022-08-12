@@ -120,8 +120,7 @@ class HomeController: UIViewController {
             print("3")
             emptyLabel.text = "Your pending tasks are empty."
             for task in tasks! {
-                if task["done"] as! Bool == false && !checkIfTaskIsOverdue(date: Date()) {
-                    print(task["done"] as! Bool)
+                if task["done"] as! Bool == false && !checkIfTaskIsOverdue(date: task["due"] as! Date) {
                     print("4")
                     filteredTasks.append(task)
                 }
@@ -132,7 +131,6 @@ class HomeController: UIViewController {
             print("3")
             for task in tasks! {
                 if task["done"] as! Bool == true {
-                    print(task["done"] as! Bool)
                     print("4")
                     filteredTasks.append(task)
                 }
@@ -140,6 +138,12 @@ class HomeController: UIViewController {
             case .overdue:
             color = UIColor.red
             emptyLabel.text = "Your overdue tasks are empty."
+            for task in tasks! {
+                if task["done"] as! Bool == false && checkIfTaskIsOverdue(date: task["due"] as! Date) {
+                    print("4")
+                    filteredTasks.append(task)
+                }
+            }
         }
         
         for task in filteredTasks {
