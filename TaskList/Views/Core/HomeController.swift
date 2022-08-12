@@ -13,6 +13,25 @@ class HomeController: UIViewController {
         super.viewDidLoad()
         
         configureViewComponents()
+        first.toggle()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if first { return }
+        
+        Task {
+            let index = segmentControl.selectedSegmentIndex
+        
+            switch index {
+                case 0:
+                await setupTaskViews(filter: .pending)
+                case 1:
+                await setupTaskViews(filter: .completed)
+                case 2:
+                await setupTaskViews(filter: .overdue)
+                default: break
+            }
+        }
     }
     
     enum taskFilter: String {
@@ -20,6 +39,8 @@ class HomeController: UIViewController {
         case completed
         case overdue
     }
+    
+    var first = true
     
     // MARK: -- Views
     
