@@ -147,7 +147,7 @@ class HomeController: UIViewController {
             
             case .completed:
             
-            color = UIColor.green
+            color = UIColor.systemGreen
             emptyLabel.text = "Your completed tasks are empty."
             for task in tasks! {
                 if task["done"] as! Bool == true {
@@ -157,7 +157,7 @@ class HomeController: UIViewController {
             
             case .overdue:
             
-            color = UIColor.red
+            color = UIColor.systemRed
             emptyLabel.text = "Your overdue tasks are empty."
             for task in tasks! {
                 if task["done"] as! Bool == false && checkIfTaskIsOverdue(date: task["due"] as! Date) {

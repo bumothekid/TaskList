@@ -251,7 +251,7 @@ extension CreateTaskController: UITextViewDelegate {
         if textView == descriptionTextView {
             if textView.textColor == UIColor.lightGray {
                 textView.text = nil
-                textView.textColor = UIColor.white
+                textView.textColor = .label
             }
         }
     }
@@ -260,7 +260,7 @@ extension CreateTaskController: UITextViewDelegate {
         if textView == descriptionTextView {
             if textView.text.isEmpty {
                 textView.text = "Description..."
-                textView.textColor = UIColor.lightGray
+                textView.textColor = .lightGray
             }
         }
     }
