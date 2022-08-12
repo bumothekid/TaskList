@@ -110,10 +110,6 @@ class HomeController: UIViewController {
             tasks = [Dictionary<String, Any>]()
         }
         
-//        guard tasks != nil && !tasks!.isEmpty else {
-//            return
-//        }
-        
         print("2")
         
         var filteredTasks = [Dictionary<String, Any>]()
