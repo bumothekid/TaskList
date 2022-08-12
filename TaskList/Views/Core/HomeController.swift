@@ -93,12 +93,22 @@ class HomeController: UIViewController {
         if tasks == nil {
             tasks = [Dictionary<String, Any>]()
         }
-        let vc = TaskDetailsController()
         
-        vc.task = tasks![index!]
-        vc.index = index!
+        if tasks![index!]["done"] as! Bool != true {
+            let vc = TaskDetailsController()
         
-        navigationController?.pushViewController(vc, animated: true)
+            vc.task = tasks![index!]
+            vc.index = index!
+            
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            let vc = CompletedTaskDetailsController()
+            
+            vc.task = tasks![index!]
+            vc.index = index!
+            
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     @objc
