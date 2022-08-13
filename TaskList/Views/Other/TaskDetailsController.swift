@@ -90,7 +90,7 @@ class TaskDetailsController: UIViewController {
     lazy var editTaskButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .secondaryColor
-        button.addTarget(self, action: #selector(back), for: .touchUpInside)
+        button.addTarget(self, action: #selector(editTask), for: .touchUpInside)
         button.layer.cornerRadius = 35
         button.tintColor = .systemBlue
         button.setImage(UIImage(systemName: "square.and.pencil", withConfiguration: UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 18, weight: .bold))), for: .normal)
@@ -164,6 +164,16 @@ class TaskDetailsController: UIViewController {
         }))
         
         present(alert, animated: true)
+    }
+    
+    @objc
+    func editTask() {
+        let vc = EditTaskController()
+        
+        vc.task = self.task
+        vc.index = self.index
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc
